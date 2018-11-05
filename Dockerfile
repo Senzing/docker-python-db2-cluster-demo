@@ -1,4 +1,4 @@
-FROM senzing/python-db2-base
+FROM senzing/python-db2-cluster-base
 
 ENV REFRESHED_AT=2018-11-01
 
