@@ -87,31 +87,8 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     export DB2_DATABASE_ALIAS_LIBFE=G2_LIBFE
     ```
 
-### Run docker container
-
-1. Option #1 - Run the docker container without database or volumes.
-
-    ```console
-    docker run -it \
-      senzing/python-db2-cluster-demo
-    ```
-
-1. Option #2 - Run the docker container with database and volumes.
-
-    ```console
-    docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
-      --publish 5000:5000 \
-      --env SENZING_CORE_DATABASE_URL="db2://${DB2_USERNAME_CORE}:${DB2_PASSWORD_CORE}@${DB2_HOST_CORE}:${DB2_PORT_CORE}/${DB2_DATABASE_ALIAS_CORE}" \
-      --env SENZING_RES_DATABASE_URL="db2://${DB2_USERNAME_RES}:${DB2_PASSWORD_RES}@${DB2_HOST_RES}:${DB2_PORT_RES}/${DB2_DATABASE_ALIAS_RES}" \
-      --env SENZING_LIBFE_DATABASE_URL="db2://${DB2_USERNAME_LIBFE}:${DB2_PASSWORD_LIBFE}@${DB2_HOST_LIBFE}:${DB2_PORT_LIBFE}/${DB2_DATABASE_ALIAS_LIBFE}" \
-      senzing/python-db2-cluster-demo
-    ```
-
-1. Option #3 - Run the docker container accessing a database in a docker network.
-
-    Identify the Docker network of the DB2 database.
-    Example:
+1. Identify the Docker network of the DB2 database.
+   Example:
 
     ```console
     docker network ls
@@ -120,7 +97,9 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     export DB2_NETWORK=nameofthe_network
     ```
 
-    Run docker container.
+### Run docker container
+
+1. Run docker container.
 
     ```console
     docker run -it  \
