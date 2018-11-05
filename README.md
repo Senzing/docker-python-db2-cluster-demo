@@ -11,7 +11,7 @@ To see a demonstration of this python demo in action, see
 ### Contents
 
 1. [Demonstrate](#demonstrate)
-    1. [Build docker image for demonstration](#build-docker-image-for-demonstration)
+    1. [Build docker image](#build-docker-image)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Set environment variables for demonstration](#set-environment-variables-for-demonstration)
     1. [Run docker container](#run-docker-container)
@@ -23,7 +23,7 @@ To see a demonstration of this python demo in action, see
 
 ## Demonstrate
 
-### Build docker image for demonstration
+### Build docker image
 
 This Dockerfile uses `FROM senzing/python-db2-cluster-base`.
 If the `senzing/python-db2-cluster-base` docker image not available, create it by following instructions at
