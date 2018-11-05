@@ -25,18 +25,20 @@ To see a demonstration of this python demo in action, see
 
 ### Build docker image
 
-This Dockerfile uses `FROM senzing/python-db2-cluster-base`.
-If the `senzing/python-db2-cluster-base` docker image not available, create it by following instructions at
-[github.com/Senzing/docker-python-db2-cluster-base](https://github.com/Senzing/docker-python-db2-cluster-base#build-docker-image)
+1. If `senzing/python-db2-cluster-base` image is not in local docker repository, it must be built manually.
+   Follow the build instructions at
+   [github.com/Senzing/docker-python-db2-cluster-base](https://github.com/Senzing/docker-python-db2-cluster-base#build)
 
-```console
-docker build --tag senzing/python-db2-cluster-demo https://github.com/senzing/docker-python-db2-cluster-demo.git
-```
+1. Build image:
+
+    ```console
+    docker build --tag senzing/python-db2-cluster-demo https://github.com/senzing/docker-python-db2-cluster-demo.git
+    ```
 
 ### Create SENZING_DIR
 
-If you do not already have an `/opt/senzing` directory on your local system, visit
-[HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
+1. If you do not already have an `/opt/senzing` directory on your local system, visit
+   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
 ### Set environment variables for demonstration
 
@@ -99,7 +101,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Run docker container
 
-1. Run docker container.
+1. Run the docker container.
 
     ```console
     docker run -it  \
