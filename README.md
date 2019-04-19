@@ -32,7 +32,7 @@ To see a demonstration of this python demo in action, see
 1. Build image:
 
     ```console
-    docker build --tag senzing/python-db2-cluster-demo https://github.com/senzing/docker-python-db2-cluster-demo.git
+    sudo docker build --tag senzing/python-db2-cluster-demo https://github.com/senzing/docker-python-db2-cluster-demo.git
     ```
 
 ### Create SENZING_DIR
@@ -53,7 +53,7 @@ To see a demonstration of this python demo in action, see
    Example:
 
     ```console
-    docker ps
+    sudo docker ps
 
     # Choose value from NAMES column of docker ps
     export DB2_HOST_CORE=docker-container-name-1
@@ -93,7 +93,7 @@ To see a demonstration of this python demo in action, see
    Example:
 
     ```console
-    docker network ls
+    sudo docker network ls
 
     # Choose value from NAME column of docker network ls
     export DB2_NETWORK=nameofthe_network
@@ -104,7 +104,7 @@ To see a demonstration of this python demo in action, see
 1. Run the docker container.
 
     ```console
-    docker run -it  \
+    sudo docker run -it  \
       --volume ${SENZING_DIR}:/opt/senzing \
       --net ${DB2_NETWORK} \
       --publish 5000:5000 \
@@ -135,8 +135,8 @@ make --version
 #### docker
 
 ```console
-docker --version
-docker run hello-world
+sudo docker --version
+sudo docker run hello-world
 ```
 
 ### Set environment variables for development
@@ -181,5 +181,5 @@ docker run hello-world
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    docker build --tag ${DOCKER_IMAGE_TAG} .
+    sudo docker build --tag ${DOCKER_IMAGE_TAG} .
     ```
