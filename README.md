@@ -1,5 +1,9 @@
 # docker-python-db2-cluster-demo
 
+## :warning: Obsolete
+
+This repository has not been updated to use the RPM/DEB installation of Senzing.
+
 ## Overview
 
 This `senzing/python-db2-cluster-demo` docker image demonstrates how to write an app based on the
@@ -21,6 +25,30 @@ To see a demonstration of this python demo in action, see
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+
+## Expectations
+
+### Space
+
+This repository and demonstration require 6 GB free disk space.
+
+### Time
+
+Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+
 ## Demonstrate
 
 ### Build docker image
@@ -37,6 +65,8 @@ To see a demonstration of this python demo in action, see
 
 ### Create SENZING_DIR
 
+Note: this is an obsolete method.
+
 1. If you do not already have an `/opt/senzing` directory on your local system, visit
    [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
@@ -47,6 +77,28 @@ To see a demonstration of this python demo in action, see
 
     ```console
     export SENZING_DIR=/opt/senzing
+    ```
+
+1. Identify the database username and password for each database instance.
+   Example:
+
+    ```console
+    export DB2_USERNAME_CORE=db2inst1
+    export DB2_USERNAME_RES=db2inst1
+    export DB2_USERNAME_LIBFE=db2inst1
+
+    export DB2_PASSWORD_CORE=db2inst1
+    export DB2_PASSWORD_RES=db2inst1
+    export DB2_PASSWORD_LIBFE=db2inst1
+    ```
+
+1. Identify the database alias that is the target of the SQL statements.
+   Example:
+
+    ```console
+    export DB2_DATABASE_ALIAS_CORE=G2_CORE
+    export DB2_DATABASE_ALIAS_RES=G2_RES
+    export DB2_DATABASE_ALIAS_LIBFE=G2_LIBFE
     ```
 
 1. Identify the host and port running DB2 server.
@@ -67,36 +119,30 @@ To see a demonstration of this python demo in action, see
     export DB2_PORT_LIBFE=50000
     ```
 
-1. Identify the database username and password.
-   Example:
+### Docker network
 
-    ```console
-    export DB2_USERNAME_CORE=db2inst1
-    export DB2_USERNAME_RES=db2inst1
-    export DB2_USERNAME_LIBFE=db2inst1
+:thinking: **Optional:**  Use if docker container is part of a docker network.
 
-    export DB2_PASSWORD_CORE=db2inst1
-    export DB2_PASSWORD_RES=db2inst1
-    export DB2_PASSWORD_LIBFE=db2inst1
-    ```
-
-1. Identify the database that is the target of the SQL statements.
-   Example:
-
-    ```console
-    export DB2_DATABASE_ALIAS_CORE=G2_CORE
-    export DB2_DATABASE_ALIAS_RES=G2_RES
-    export DB2_DATABASE_ALIAS_LIBFE=G2_LIBFE
-    ```
-
-1. Identify the Docker network of the DB2 database.
+1. List docker networks.
    Example:
 
     ```console
     sudo docker network ls
+    ```
 
-    # Choose value from NAME column of docker network ls
-    export DB2_NETWORK=nameofthe_network
+1. :pencil2: Specify docker network.
+   Choose value from NAME column of `docker network ls`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK=*nameofthe_network*
+    ```
+
+1. Construct parameter for `docker run`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
     ```
 
 ### Run docker container
@@ -105,12 +151,12 @@ To see a demonstration of this python demo in action, see
 
     ```console
     sudo docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${DB2_NETWORK} \
-      --publish 5000:5000 \
       --env SENZING_CORE_DATABASE_URL="db2://${DB2_USERNAME_CORE}:${DB2_PASSWORD_CORE}@${DB2_HOST_CORE}:${DB2_PORT_CORE}/${DB2_DATABASE_ALIAS_CORE}" \
       --env SENZING_RES_DATABASE_URL="db2://${DB2_USERNAME_RES}:${DB2_PASSWORD_RES}@${DB2_HOST_RES}:${DB2_PORT_RES}/${DB2_DATABASE_ALIAS_RES}" \
       --env SENZING_LIBFE_DATABASE_URL="db2://${DB2_USERNAME_LIBFE}:${DB2_PASSWORD_LIBFE}@${DB2_HOST_LIBFE}:${DB2_PORT_LIBFE}/${DB2_DATABASE_ALIAS_LIBFE}" \
+      --publish 5000:5000 \
+      --volume ${SENZING_DIR}:/opt/senzing \
+      ${SENZING_NETWORK_PARAMETER} \
       senzing/python-db2-cluster-demo
     ```
 
@@ -118,68 +164,42 @@ To see a demonstration of this python demo in action, see
 
 ### Prerequisite software
 
-The following software programs need to be installed.
+The following software programs need to be installed:
 
-#### git
-
-```console
-git --version
-```
-
-#### make
-
-```console
-make --version
-```
-
-#### docker
-
-```console
-sudo docker --version
-sudo docker run hello-world
-```
-
-### Set environment variables for development
-
-1. These variables may be modified, but do not need to be modified.
-   The variables are used throughout the installation procedure.
-
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-python-db2-cluster-demo
-    export DOCKER_IMAGE_TAG=senzing/python-db2-cluster-demo
-    ```
-
-1. Synthesize environment variables.
-
-    ```console
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    export GIT_REPOSITORY_URL="git@github.com:${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-    ```
+1. [git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
+1. [make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 
 ### Clone repository
 
-1. Get repository.
+For more information on environment variables,
+see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md).
+
+1. Set these environment variable values:
 
     ```console
-    mkdir --parents ${GIT_ACCOUNT_DIR}
-    cd  ${GIT_ACCOUNT_DIR}
-    git clone ${GIT_REPOSITORY_URL}
+    export GIT_ACCOUNT=senzing
+    export GIT_REPOSITORY=docker-template
+    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
+
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 ### Build docker image for development
 
-1. Option #1 - Using make command
+1. **Option #1:** Using `docker` command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    make docker-build
+    sudo docker build --tag senzing/template .
     ```
 
-1. Option #2 - Using docker command
+1. **Option #2:** Using `make` command.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --tag ${DOCKER_IMAGE_TAG} .
+    sudo make docker-build
     ```
+
+    Note: `sudo make docker-build-development-cache` can be used to create cached docker layers.
