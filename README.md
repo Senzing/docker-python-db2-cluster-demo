@@ -179,7 +179,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-template
+    export GIT_REPOSITORY=docker-python-db2-cluster-demo
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
     ```
@@ -192,7 +192,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    sudo docker build --tag senzing/template .
+    sudo docker build --tag senzing/python-db2-cluster-demo .
     ```
 
 1. **Option #2:** Using `make` command.
